@@ -1,0 +1,19 @@
+{
+  "name": "foodecommerce",
+  "version": "1.0.0",
+  "description": "an e-commerce site made using node.j and mongodb.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://BhavyamGoyal@github.com/BhavyamGoyal/FoodEcommerce-Node.js.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/BhavyamGoyal/FoodEcommerce-Node.js/issues"
+  },
+  "homepage": "https://github.com/BhavyamGoyal/FoodEcommerce-Node.js#readme"
+}
