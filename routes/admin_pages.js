@@ -51,9 +51,12 @@ router.post('/add-page',function(req,res){
         });
     }
     else{
+    
         Page.findOne({slug :slug},function(err,page){
+        
             if(page){
                 req.flash('danger','Page slug exist, choose another.');
+                
                 res.render('admin/add-page',{
                     
                     title: title,
@@ -69,10 +72,10 @@ router.post('/add-page',function(req,res){
                 });
                 page.save(function(err){
                     if(err){
-                        return console.log(err);
+                     console.log(err);
                     }
                     req.flash('success','Page added!');
-                    req.redirect('/admin/pages');
+                    res.redirect('/admin/pages');
                 });
 
                 
