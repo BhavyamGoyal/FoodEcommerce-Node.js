@@ -42,8 +42,8 @@
 
     <% if(errors) {%>
       <% errors.forEach(function(error){%>
-        <div class="alert-danger">
-          <% error.msg %>
+        <div class="alert alert-danger">
+          <%= error.msg %>
         </div>
 
      <% });%>

@@ -31,10 +31,13 @@ router.post('/add-page',function(req,res){
    req.checkBody('content','Content must have a value.').notEmpty();
    var title =req.body.title;
     var slug =req.body.slug.replace(/\s+/g,'-').toLowerCase();
-    if (slug="") slug = title.replace(/\s+/g,'-').toLowerCase();
+    if (slug==""){
+     slug = title.replace(/\s+/g,'-').toLowerCase();
+    }
     var content =req.body.content;
     var errors = req.validationErrors();
     if(errors){
+        console.log(JSON.stringify(errors));
         res.render('admin/add-page',{
             errors:errors,
             title: title,
