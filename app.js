@@ -41,7 +41,7 @@ app.use(session({
     cookie: { secure: true }
   }));
 
-//Express Validatoe MiddleWare
+//Express Validator MiddleWare
   app.use(expressValidator({
     errorFormatter: function(param, msg, value) {
         var namespace = param.split('.')
