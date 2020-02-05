@@ -23,9 +23,9 @@
       <li class="nav-item active">
         <a class="navbar-brand" href="/admin/pages">Pages </a>
       </li>
-      
-      
-      
+	  <li class="nav-item active">
+        <a class="navbar-brand" href="/admin/categories">Categories</a>
+      </li>
         </div>
       </li>
     </ul>
@@ -45,6 +45,7 @@
       <% errors.forEach(function(error){%>
         <div class="alert alert-danger">
           <%= error.msg %>
+          <%= console.log(error.msg) %>
         </div>
 
      <% });%>

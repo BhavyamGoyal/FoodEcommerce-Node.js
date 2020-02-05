@@ -1,0 +1,13 @@
+<%- include ('../_layouts/adminheader.ejs') -%>
+<h2 class="page-title">Edit a Category</h2>
+<a href="/admin/pages"class="btn btn-primary">Back to all category</a>
+<br><br>
+
+<form method="POST" action="/admin/categories/edit-category/<%= id %>">
+<div class="form-group">
+    <label for="">Title</label>
+    <input type="text" class="form-control" name="title" value="<%= title %>" placeholder="Title">
+</div>
+<button class="btn btn-default">Submit</button>
+</form>
+<%- include ('../_layouts/adminfooter.ejs') -%>

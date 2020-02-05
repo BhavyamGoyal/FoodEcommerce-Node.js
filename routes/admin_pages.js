@@ -135,7 +135,7 @@ router.get('/edit-page/:slug',function(req,res){
 //Post Edit page
 //=============
 router.post('/edit-page/:slug',function(req,res){
-    
+    console.log("[admin_pages.js]edit pages post request ");
     req.checkBody('title','Title must have a value.').notEmpty();
     req.checkBody('content','Content must have a value.').notEmpty();
     var title =req.body.title;
@@ -161,6 +161,7 @@ router.post('/edit-page/:slug',function(req,res){
          Page.findOne({slug :slug, _id:{'$ne':id}},function(err,page){
          
              if(page){
+                 console.log('error');
                  req.flash('danger','Page slug exist, choose another.');
                  
                  res.render('admin/edit-page',{
@@ -174,7 +175,9 @@ router.post('/edit-page/:slug',function(req,res){
 
                 Page.findById(id,function(err,page){
                     if(err)
-                        return console.log(err);
+                       { return console.log(err);}
+                        
+                        
                         page.title = title;
                         page.slug = slug;
                         page.content = content;
@@ -195,5 +198,18 @@ router.post('/edit-page/:slug',function(req,res){
      }
      
  });
+ //==============
+//Get delete page
+//=============
+router.get('/delete-page/:id',function(req,res){
+    Page.findByIdAndRemove(req.params.id,function(err){
+        if(err) return console.log(err);
+
+        req.flash('success','Page deleted!');
+                            res.redirect('/admin/pages/');
+  
+    });
+    
+});
 //Exports
 module.exports = router;
