@@ -189,71 +189,81 @@ router.get('/edit-product/:id', function (req, res) {
 });
 
 //==============
-//Post Edit page
+//Post Edit product
 //=============
 router.post('/edit-product/:id', function (req, res) {
-    console.log("[admin_pages.js]edit pages post request ");
+    var imageFile = typeof req.files.image !== "undefined" ? req.files.image.name : "";
     req.checkBody('title', 'Title must have a value.').notEmpty();
-    req.checkBody('content', 'Content must have a value.').notEmpty();
+    req.checkBody('desc', 'Description must have a value.').notEmpty();
+    req.checkBody('price', 'Price must have a value as number.').isDecimal();
+    req.checkBody('image', 'must Upload an image').isImage(imageFile);
+
+
     var title = req.body.title;
-    var slug = req.body.slug.replace(/\s+/g, '-').toLowerCase();
-    if (slug == "") {
-        slug = title.replace(/\s+/g, '-').toLowerCase();
-    }
-    var content = req.body.content;
+    var slug = title.replace(/\s+/g, '-').toLowerCase();
+
+    var desc = req.body.desc;
+    var price = req.body.price;
+    var category = req.body.category;
+    var pimage = req.body.pimage;
     var id = req.params.id;
-    var errors = req.validationErrors();
-    if (errors) {
-        console.log(JSON.stringify(errors));
-        res.render('admin/edit-page', {
-            errors: errors,
-            title: title,
-            slug: slug,
-            content: content,
-            id: id
-        });
+
+    var errors = req.validationErrors(); 
+    if(errors){
+        req.session.errors = errors;
+        res.redirect('/admin/products/edit-product/'+id);
     }
-    else {
+    else{
+        Product.findOne({slug: slug,_id:{'$ne':id}},function(err,p){
+            if(err){
+                console.log(err);  }
+            if(p){
+                    req.flash('danger','Product title exists, choose another');
+                    res.redirect('/admin/products/edit-product/'+id);
+                }
+                else{
+                    Product.findById(id,function(err,p){
+                        if(err){
+                            console.log(err); }
+                            p.title = title;
+                            p.slug = slug;
+                            p.desc = desc;
+                            p.price = parseFloat(price).toFixed(2);
+                            p.category = category;
+                            if(imageFile !=""){
+                                p.image = imageFile;
+                            } 
+                            p.save(function(err){
+                                if(err){
+                                    console.log(err);}
+                                    if(imageFile !=""){
+                                        if(pimage !=""){
+                                            fs.remove('public/product_images',+ id+'/'+pimage,function(err){
+                                                if(err){
+                                                    console.log(err);}
+                                            });
+                                        }
 
-        Page.findOne({ slug: slug, _id: { '$ne': id } }, function (err, page) {
+                                        var productImage = req.files.image;
+                                        console.log(req.files);
+                                        var path = 'public/product_images/' + id + '/' + imageFile;
+                                        console.log(imageFile);
+                                        productImage.mv(path, function (err) {
+                                            return console.log("error while saving file" + err);
+                                        });
+                                    }
 
-            if (page) {
-                console.log('error');
-                req.flash('danger', 'Page slug exist, choose another.');
+                                    req.flash('success', 'product edited!');
+                                    res.redirect('/admin/products/edit-product/'+id);
+                            });
 
-                res.render('admin/edit-page', {
-
-                    title: title,
-                    slug: slug,
-                    content: content,
-                    id: id
-                });
-            } else {
-
-                Page.findById(id, function (err, page) {
-                    if (err) { return console.log(err); }
-
-
-                    page.title = title;
-                    page.slug = slug;
-                    page.content = content;
-
-                    page.save(function (err) {
-                        if (err) {
-                            console.log(err);
-                        }
-                        req.flash('success', 'Page added!');
-                        res.redirect('/admin/pages/edit-page/' + id);
                     });
-                });
-
-
-
-            }
+                }
         });
     }
 
 });
+
 //==============
 //Get delete page
 //=============
