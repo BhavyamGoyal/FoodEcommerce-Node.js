@@ -5,6 +5,7 @@ var config = require('./config/database');
 var bodyParser = require('body-parser');
 var session = require('express-session');
 var expressValidator = require('express-validator');
+var fileUpload = require('express-fileupload');
 //Connect to db
 mongoose.connect(config.database);
 var db = mongoose.connection;
@@ -12,7 +13,6 @@ db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {
     console.log('Connected to Mongodb');
 });
-
 //init app
 var app = express();
 
@@ -25,6 +25,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 //Set Globalerror variable
 app.locals.errors = null;
+
+//Express fileupload middleware
+app.use(fileUpload());
 
 //Body Parser Middleware
 // parse application/x-www-form-urlencoded
@@ -56,7 +59,25 @@ app.use(session({
         msg   : msg,
         value : value
       };
-    }
+      },
+      customValidators: {
+          isImage: function (value, filename) {
+              var extention = (path.extname(filename)).toLowerCase();
+              switch (extention) {
+                  case '.jpg':
+                      return '.jpg'; 
+                  case '.jpeg':
+                      return '.jpeg';
+                  case '.png':
+                      return '.png';
+                  case '':
+                      return '.jpg';
+                  default:
+                      return false;
+
+              }
+          }
+      }
   }));
 
   //Express Messages MiddleWare
@@ -70,10 +91,12 @@ app.use(function (req, res, next) {
 var pages = require('./routes/pages.js');
 var adminPages = require('./routes/admin_pages.js');
 var adminCategories = require('./routes/admin_categories');
+var adminProducts = require('./routes/admin_products');
 
 app.use('/',pages);
 app.use('/admin/pages', adminPages);
 app.use('/admin/categories', adminCategories);
+app.use('/admin/products', adminProducts);
 
 
 

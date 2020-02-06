@@ -1,0 +1,16 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\models",
+    "\\public",
+    "\\public\\css",
+    "\\public\\images",
+    "\\public\\product_images",
+    "\\routes",
+    "\\views",
+    "\\views\\admin",
+    "\\views\\_layouts"
+  ],
+  "SelectedNode": "\\public\\product_images",
+  "PreviewInSolutionExplorer": false
+}
