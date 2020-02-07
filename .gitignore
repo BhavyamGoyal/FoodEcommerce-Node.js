@@ -102,3 +102,6 @@ dist
 
 # TernJS port file
 .tern-port
+
+#ignore product_images
+public/product_images
