@@ -30,6 +30,7 @@ router.get('/add/:product', function(req, res) {
             var newItem = true;
             for (var i = 0; i < cart.length; i++) {
                 if (cart[i].title == slug) {
+                    cart[i].qty++;
                     newItem = false;
                     break;
                 }
