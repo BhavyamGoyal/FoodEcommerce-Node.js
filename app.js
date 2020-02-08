@@ -11,7 +11,7 @@ mongoose.connect(config.database);
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {
-  console.log('Connected to Mongodb');
+    console.log('Connected to Mongodb');
 });
 //init app
 var app = express();
@@ -30,26 +30,24 @@ app.locals.errors = null;
 var Category = require("./models/category");
 
 //Get all categories to pass to header.ejs
-Category.find(function (err,categories){
-  if(err){
-    console.log(err);
-  }
-  else{
-    app.locals.categories = categories;
-  }
+Category.find(function(err, categories) {
+    if (err) {
+        console.log(err);
+    } else {
+        app.locals.categories = categories;
+    }
 });
 
 //Get page Model
 var Page = require("./models/page");
 
 //Get all pages to pass to header.ejs
-Page.find({}).sort({sorting:1}).exec(function (err,pages){
-  if(err){
-    console.log(err);
-  }
-  else{
-    app.locals.pages = pages;
-  }
+Page.find({}).sort({ sorting: 1 }).exec(function(err, pages) {
+    if (err) {
+        console.log(err);
+    } else {
+        app.locals.pages = pages;
+    }
 });
 
 
@@ -69,51 +67,56 @@ app.use(session({
     secret: 'keyboard cat',
     resave: true,
     saveUninitialized: true,
-   // cookie: { secure: true }
-  }));
+    // cookie: { secure: true }
+}));
 
 //Express Validator MiddleWare
-  app.use(expressValidator({
+app.use(expressValidator({
     errorFormatter: function(param, msg, value) {
-        var namespace = param.split('.')
-        , root    = namespace.shift()
-        , formParam = root;
-  
-      while(namespace.length) {
-        formParam += '[' + namespace.shift() + ']';
-      }
-      return {
-        param : formParam,
-        msg   : msg,
-        value : value
-      };
-      },
-      customValidators: {
-          isImage: function (value, filename) {
-              var extention = (path.extname(filename)).toLowerCase();
-              switch (extention) {
-                  case '.jpg':
-                      return '.jpg'; 
-                  case '.jpeg':
-                      return '.jpeg';
-                  case '.png':
-                      return '.png';
-                  case '':
-                      return '.jpg';
-                  default:
-                      return false;
+        var namespace = param.split('.'),
+            root = namespace.shift(),
+            formParam = root;
 
-              }
-          }
-      }
-  }));
+        while (namespace.length) {
+            formParam += '[' + namespace.shift() + ']';
+        }
+        return {
+            param: formParam,
+            msg: msg,
+            value: value
+        };
+    },
+    customValidators: {
+        isImage: function(value, filename) {
+            var extention = (path.extname(filename)).toLowerCase();
+            switch (extention) {
+                case '.jpg':
+                    return '.jpg';
+                case '.jpeg':
+                    return '.jpeg';
+                case '.png':
+                    return '.png';
+                case '':
+                    return '.jpg';
+                default:
+                    return false;
 
-  //Express Messages MiddleWare
+            }
+        }
+    }
+}));
+
+//Express Messages MiddleWare
 app.use(require('connect-flash')());
-app.use(function (req, res, next) {
-  res.locals.messages = require('express-messages')(req, res);
-  next();
+app.use(function(req, res, next) {
+    res.locals.messages = require('express-messages')(req, res);
+    next();
 });
+
+app.get('*', function(req, res, next) {
+    res.locals.cart = req.session.cart;
+    next();
+})
 
 //Set routes
 var pages = require('./routes/pages.js');
@@ -121,12 +124,16 @@ var products = require('./routes/products.js');
 var adminPages = require('./routes/admin_pages.js');
 var adminCategories = require('./routes/admin_categories');
 var adminProducts = require('./routes/admin_products');
+var cart = require('./routes/cart');
 
-app.use('/',pages);
+
+app.use('/', pages);
+app.use('/admin', adminPages);
 app.use('/admin/pages', adminPages);
 app.use('/products', products);
 app.use('/admin/categories', adminCategories);
 app.use('/admin/products', adminProducts);
+app.use('/cart', cart);
 
 
 

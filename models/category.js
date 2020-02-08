@@ -4,13 +4,17 @@ var mongoose = require('mongoose');
 
 var CategorySchema = mongoose.Schema({
 
-    title:{
+    title: {
         type: String,
         required: true
     },
-    slug:{
+    slug: {
         type: String
     }
 });
 
-var Category = module.exports = mongoose.model('Category',CategorySchema);
+try {
+    var Category = module.exports = mongoose.model('Category');
+} catch {
+    var Category = module.exports = mongoose.model('Category', CategorySchema);
+}
