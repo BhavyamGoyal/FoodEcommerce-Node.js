@@ -75,9 +75,10 @@ router.get('/:category/:product',function(req,res){
                     console.log(err);
                 }else{
                     galleryImages = files;
+                   
                     res.render('product',{
-                        title: Product.title,
-                        p: Product,
+                        title: product.title,
+                        p: product,
                         galleryImages: galleryImages
                     })
                 }
