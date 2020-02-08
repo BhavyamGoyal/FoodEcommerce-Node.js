@@ -127,10 +127,9 @@ var adminProducts = require('./routes/admin_products');
 var cart = require('./routes/cart');
 
 
-app.use('/', pages);
-app.use('/admin', adminPages);
-app.use('/admin/pages', adminPages);
 app.use('/products', products);
+app.use('/', pages);
+app.use('/admin/pages', adminPages);
 app.use('/admin/categories', adminCategories);
 app.use('/admin/products', adminProducts);
 app.use('/cart', cart);

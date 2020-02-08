@@ -14,15 +14,16 @@ var Category = require('../models/category');
 //Get all products
 
 router.get('/',function(req,res){
+    console.log("[All prducts rout] calling all products");
     //res.send('working on my project yo!!!');
-    product.find(function(err,products){
+    Product.find(function(err,products){
         if(err){
             console.log(err);
         }
-       
+            console.log(products+"=======allprosucts");
             res.render('all_products',{
                 title: 'All products',
-                content: products
+                products: products
             });
 
        
@@ -34,16 +35,21 @@ router.get('/',function(req,res){
 
 router.get('/:category',function(req,res){
     //res.send('working on my project yo!!!');
-    var categorySlug = req.params.Category;
+    console.log("[product/category]trying to display "+req.params.category);
+    
+    var categorySlug = req.params.category;
     Category.findOne({slug:categorySlug},function(err,c){
-        product.find({Category:categorySlug},function(err,products){
+        if(err){
+            console.log(err);
+        }
+        Product.find({category:categorySlug},function(err,products){
             if(err){
                 console.log(err);
             }
-           
+                console.log("cat products:"+products);
                 res.render('cat_products',{
                     title: c.title,
-                    content: products
+                    products: products
                 });
     
            
@@ -57,7 +63,7 @@ router.get('/:category',function(req,res){
 //Get product details
 
 router.get('/:category/:product',function(req,res){
-    
+    console.log("trying to display "+req.params.product);
     var galleryImages =null;
     Product.findOne({slug: req.params.product},function(err,product){
         if(err){
