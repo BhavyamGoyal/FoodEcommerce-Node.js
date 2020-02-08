@@ -1,0 +1,38 @@
+<%- include ('./_layouts/header.ejs') %>
+    <% if(typeof caart!== "undefined") { %>
+        <tabe class="table-striped">
+            <tr>
+                <th>Image</th>
+                <th>Product</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th></th>
+                <th>Subtotla</th>
+            </tr>
+            <% cart.forEach(function(product){ %>
+                <tr>
+                    <td>
+                        <img src="<%= product.image %>" alt="">
+                    </td>
+                    <td>
+                        <%= product.title %>
+                    </td>
+                    <td>
+                        $
+                        <%= product.price %>
+                    </td>
+                    <td>
+                        <%= product.quantity %>
+                    </td>
+                    <td>
+                        <a href="/cart/update/<%= product.title %>?action=add">+</a>&nbsp;
+                        <a href="/cart/update/<%= product.title %>?action=remove">-</a>&nbsp;
+                        <a href="/cart/update/<%= product.title %>?action=clear">Clear</a>&nbsp;
+
+                    </td>
+                </tr>
+                <% });%>
+                    <% }else{ %>
+                        <h3 class="text-center">Your Cart Is Empty</h3>
+                        <% } %>
+                            <%- include ('./_layouts/footer.ejs') %>

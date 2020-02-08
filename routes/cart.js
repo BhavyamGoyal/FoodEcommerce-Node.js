@@ -46,5 +46,12 @@ router.get('/add/:product', function(req, res) {
         
     });
 });
+
+router.get('/checkout', function(req, res) {
+    res.render('checkout', {
+        title: 'checkout',
+        cart: req.session.cart
+    })
+});
 //Exports
 module.exports = router;
