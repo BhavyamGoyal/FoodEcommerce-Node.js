@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 //==============
-//Get page Model
+//Get product Model
 //=============
 var Product = require('../models/product');
 
@@ -46,10 +46,12 @@ router.get('/add/:product', function(req, res) {
         
     });
 });
-
+//========================
+//Get checkout Page
+//==================
 router.get('/checkout', function(req, res) {
     res.render('checkout', {
-        title: 'checkout',
+        title: 'Checkout',
         cart: req.session.cart
     })
 });

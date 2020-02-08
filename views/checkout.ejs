@@ -1,18 +1,23 @@
 <%- include ('./_layouts/header.ejs') %>
-    <% if(typeof caart!== "undefined") { %>
-        <tabe class="table-striped">
+    <% if(typeof cart!== "undefined") { %>
+        <h1 class="page-title">My Cart</h1>
+        <br> <br>
+        <table class="table table-striped alignmiddle">
             <tr>
                 <th>Image</th>
                 <th>Product</th>
                 <th>Price</th>
                 <th>Quantity</th>
                 <th></th>
-                <th>Subtotla</th>
+                <th>Subtotal</th>
             </tr>
+            <% var total = 0; %>
             <% cart.forEach(function(product){ %>
+                <% var sub = parseFloat(product.qty * product.price).toFixed(2) %>
+                <% total+=+sub %>
                 <tr>
                     <td>
-                        <img src="<%= product.image %>" alt="">
+                        <img class="cpi" src="<%= product.image %>" alt="">
                     </td>
                     <td>
                         <%= product.title %>
@@ -22,7 +27,7 @@
                         <%= product.price %>
                     </td>
                     <td>
-                        <%= product.quantity %>
+                        <%= product.qty %>
                     </td>
                     <td>
                         <a href="/cart/update/<%= product.title %>?action=add">+</a>&nbsp;
@@ -30,8 +35,21 @@
                         <a href="/cart/update/<%= product.title %>?action=clear">Clear</a>&nbsp;
 
                     </td>
+                    <td>$<%= sub %></td>
                 </tr>
+               
                 <% });%>
+                <tr>
+                    <td colspan="6" align="right"><b>Total :</b>$<%= parseFloat(total).toFixed(2) %></td>
+                </tr>
+                <tr>
+                    <td colspan="6" align="right">
+                        <a class="btn btn-danger" href="/cart/clear">Clear cart</a>
+                    </td>
+                    <td colspan="6" align="right">
+                        <a class="btn btn-primary buynow" href="#">Buy now</a>
+                    </td>
+                </tr>
                     <% }else{ %>
                         <h3 class="text-center">Your Cart Is Empty</h3>
                         <% } %>
