@@ -11,7 +11,7 @@ mongoose.connect(config.database);
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {
-  console.log('Connected to Mongodb');
+    console.log('Connected to Mongodb');
 });
 //init app
 var app = express();
@@ -30,13 +30,12 @@ app.locals.errors = null;
 var Category = require("./models/category");
 
 //Get all categories to pass to header.ejs
-Category.find(function (err,categories){
-  if(err){
-    console.log(err);
-  }
-  else{
-    app.locals.categories = categories;
-  }
+Category.find(function(err, categories) {
+    if (err) {
+        console.log(err);
+    } else {
+        app.locals.categories = categories;
+    }
 });
 
 //Get page Model
@@ -128,6 +127,7 @@ var cart = require('./routes/cart');
 
 
 app.use('/', pages);
+app.use('/admin', adminPages);
 app.use('/admin/pages', adminPages);
 app.use('/admin/categories', adminCategories);
 app.use('/admin/products', adminProducts);
