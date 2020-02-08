@@ -44,10 +44,8 @@ router.get('/add/:product', function(req, res) {
                 image: '/product_images/' + p._id + '/' + p.image
             });
         }
-        console.log("res succ");
         req.flash('success', 'Product Added To Cart');
         res.redirect('back');
-        console.log("res succ2");
 
     });
 });
@@ -60,5 +58,16 @@ router.get('/checkout', function(req, res) {
         cart: req.session.cart
     })
 });
+
+//========================
+//Get clearcart
+//==================
+router.get('/clear', function(req, res) {
+    console.log("[clear/]");
+    delete req.session.cart;
+    req.flash("success", "Cart Cleared");
+    res.redirect('/cart/checkout');
+});
+
 //Exports
 module.exports = router;

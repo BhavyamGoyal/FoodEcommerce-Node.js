@@ -48,7 +48,7 @@
                                 </tr>
                                 <tr>
                                     <td colspan="6" align="right">
-                                        <a class="btn btn-danger" href="/cart/clear">Clear cart</a>
+                                        <a class="clearcart btn btn-danger" href="/cart/clear">Clear cart</a>
                                     </td>
                                     <td colspan="6" align="right">
                                         <a class="btn btn-primary buynow" href="#">Buy now</a>
@@ -58,4 +58,14 @@
         <% }else{ %>
             <h3 class="text-center">Your Cart Is Empty</h3>
             <% } %>
+                <script>
+                    $(function() {
+                        $('a.clearcart').on('click', function() {
+                            if (!confirm('confirm Deletion')) {
+                                return false;
+                            }
+                        });
+                    })
+                </script>
+
                 <%- include ('./_layouts/footer.ejs') %>
