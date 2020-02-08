@@ -43,19 +43,34 @@
             <ul class="navbar-nav mr-auto">
                 <li>
                     <a class="navbar-brand" href="/cart/checkout">My Cart(
-                  <% if(typeof caart !== "undefined"){ %>
-                    
-                    <%= cart.length %>
-                    <% }else{ %>
-                      0  
-                  <% } %>
-                )</a>
+            <% if(typeof caart !== "undefined"){ %>
+
+            <%= cart.length %>
+            <% }else{ %>
+            0
+            <% } %>
+            )</a>
                 </li>
             </ul>
         </div>
     </nav>
 
     <main role="main" class="container">
-
         <div class="starter-template">
             <%- messages('messages', locals) %>
+                <div class="row">
+                    <div class="col-xs-12 col-md-3">
+                        <h3>Categories</h3>
+                        <ul class="list-group">
+                            <li class="list-group-item"><a href="/products">All Products</a></li>
+                            <% categories.forEach(function(c){
+             
+              <li class="list-group-item"><a href="/products/<%= c.slug %>">
+                                <%= c.title%>
+                                    </a>
+                                    </li>
+                                    <%});%>
+                        </ul>
+                    </div>
+                    <div class="col-xs-12 col-md-1"></div>
+                    <div class="col-xs-12 col-md-8">

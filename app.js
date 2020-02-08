@@ -11,7 +11,7 @@ mongoose.connect(config.database);
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {
-    console.log('Connected to Mongodb');
+  console.log('Connected to Mongodb');
 });
 //init app
 var app = express();
@@ -26,6 +26,19 @@ app.use(express.static(path.join(__dirname, 'public')));
 //Set Globalerror variable
 app.locals.errors = null;
 
+//Get Category Model
+var Category = require("./models/category");
+
+//Get all categories to pass to header.ejs
+Category.find(function (err,categories){
+  if(err){
+    console.log(err);
+  }
+  else{
+    app.locals.categories = categories;
+  }
+});
+
 //Get page Model
 var Page = require("./models/page");
 
@@ -37,6 +50,8 @@ Page.find({}).sort({ sorting: 1 }).exec(function(err, pages) {
         app.locals.pages = pages;
     }
 });
+
+
 
 //Express fileupload middleware
 app.use(fileUpload());
