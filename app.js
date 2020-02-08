@@ -117,12 +117,14 @@ app.use(function (req, res, next) {
 
 //Set routes
 var pages = require('./routes/pages.js');
+var products = require('./routes/products.js');
 var adminPages = require('./routes/admin_pages.js');
 var adminCategories = require('./routes/admin_categories');
 var adminProducts = require('./routes/admin_products');
 
 app.use('/',pages);
 app.use('/admin/pages', adminPages);
+app.use('/products', products);
 app.use('/admin/categories', adminCategories);
 app.use('/admin/products', adminProducts);
 
