@@ -123,7 +123,7 @@ app.use(passport.session());
 
 app.get('*', function(req, res, next) {
     res.locals.cart = req.session.cart;
-    res.locals.user = req.user || null ;
+    res.locals.user = req.user || null;
     next();
 })
 
@@ -143,7 +143,7 @@ app.use('/admin/pages', adminPages);
 app.use('/admin/categories', adminCategories);
 app.use('/admin/products', adminProducts);
 app.use('/cart', cart);
-app.use('/users',users);
+app.use('/users', users);
 
 
 

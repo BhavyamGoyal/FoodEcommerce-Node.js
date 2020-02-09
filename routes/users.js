@@ -10,57 +10,57 @@ var User = require('../models/user');
 //register user
 
 router.get('/register', function(req, res) {
-    res.render('register',{
-        title:'Register',
+    res.render('register', {
+        title: 'Register',
     });
 })
 
 // post register
 router.post('/register', function(req, res) {
-    var name=req.body.name;
-    var email=req.body.email;
-    var username=req.body.username;
-    var password=req.body.password;
-    var password2=req.body.password2;
-    req.checkBody('name','name is required').notEmpty();
-    req.checkBody('email','email is required').isEmail();
-    req.checkBody('username','username is required').notEmpty();
-    req.checkBody('password','password is required').notEmpty();
-    req.checkBody('password2','Passwords do not match').equals(password);
-    var errors=req.validationErrors();
-    if(errors){
-        res.render('register',{
-            errors:errors,
-            user:null,
-            title:'Register',
+    var name = req.body.name;
+    var email = req.body.email;
+    var username = req.body.username;
+    var password = req.body.password;
+    var password2 = req.body.password2;
+    req.checkBody('name', 'name is required').notEmpty();
+    req.checkBody('email', 'email is required').isEmail();
+    req.checkBody('username', 'username is required').notEmpty();
+    req.checkBody('password', 'password is required').notEmpty();
+    req.checkBody('password2', 'Passwords do not match').equals(password);
+    var errors = req.validationErrors();
+    if (errors) {
+        res.render('register', {
+            errors: errors,
+            user: null,
+            title: 'Register',
         });
-    }else{
-        User.findOne({username:username},function(err,user){
-            if(err){
-                console.log("[Users.js] post register error: "+err);
+    } else {
+        User.findOne({ username: username }, function(err, user) {
+            if (err) {
+                console.log("[Users.js] post register error: " + err);
             }
-            if(user){
-                req.flash('danger','user already exists choose another username');
+            if (user) {
+                req.flash('danger', 'user already exists choose another username');
                 res.redirect('/users/register');
-            }else{
-                var user=new User({
-                    name:name,
-                    email:email,
-                    username:username,
-                    password:password,
-                    admin:0
+            } else {
+                var user = new User({
+                    name: name,
+                    email: email,
+                    username: username,
+                    password: password,
+                    admin: 0
                 });
-                bcrypt.genSalt(10,function(err,salt){
-                    bcrypt.hash(user.password,salt,function(err,hash){
-                        if(err){
+                bcrypt.genSalt(10, function(err, salt) {
+                    bcrypt.hash(user.password, salt, function(err, hash) {
+                        if (err) {
                             console.log(err);
-                        } 
-                        user.password=hash;
-                        user.save(function(err){
-                            if(err){
+                        }
+                        user.password = hash;
+                        user.save(function(err) {
+                            if (err) {
                                 console.log(err);
-                            }else{
-                                req.flash('success','You are now registered');
+                            } else {
+                                req.flash('success', 'You are now registered');
                                 res.redirect('/users/login');
                             }
                         });
@@ -75,30 +75,28 @@ router.post('/register', function(req, res) {
 
 
 router.get('/login', function(req, res) {
-    if(res.locals.user){
+    if (res.locals.user) {
         res.redirect('/');
-
     }
-    res.render('login',{
-        title:'LogIn',
+    res.render('login', {
+        title: 'LogIn',
     });
 });
 
 //Post login
-router.post('/login', function(req, res,next) {
-    passport.authenticate('local',{
-        successRedirect:'/',
-        failureRedirect:'/users/login',
-        failureFlash:true
-    })(req,res,next);
-
+router.post('/login', function(req, res, next) {
+    passport.authenticate('local', {
+        successRedirect: '/',
+        failureRedirect: '/register',
+        failureFlash: true
+    })(req, res, next);
 });
 
 //logout
 router.get('/logout', function(req, res) {
-    req.logOut();
-    req.flash('success',"Successfully Logged Out");
-    res.redirect('/users/login');
-})
-//Exports
+        req.logOut();
+        req.flash('success', "Successfully Logged Out");
+        res.redirect('/users/login');
+    })
+    //Exports
 module.exports = router;
