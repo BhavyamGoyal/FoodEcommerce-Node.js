@@ -12,7 +12,7 @@ var Product = require('../models/product');
 //==============
 //Get Category Model
 //=============
-var Category = require('../models/Category');
+var Category = require('../models/category');
 
 //==============
 //Get products Index
