@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
 var fs = require('fs-extra');
+var auth =  require('../config/auth');
+var isUser = auth.isUser;
 
 //==============
 //Get Product Model
@@ -13,7 +15,8 @@ var Category = require('../models/category');
 
 //Get all products
 
-router.get('/', function(req, res) {
+router.get('/',  function(req, res) {
+   // router.get('/', isUser, function(req, res) {
     console.log("[All prducts rout] calling all products");
     //res.send('working on my project yo!!!');
     Product.find(function(err, products) {
