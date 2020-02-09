@@ -46,7 +46,6 @@ router.get('/add/:product', function(req, res) {
         }
         req.flash('success', 'Product Added To Cart');
         res.redirect('back');
-
     });
 });
 //========================
