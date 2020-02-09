@@ -89,19 +89,22 @@ app.use(expressValidator({
     },
     customValidators: {
         isImage: function(value, filename) {
-            var extention = (path.extname(filename)).toLowerCase();
-            switch (extention) {
-                case '.jpg':
-                    return '.jpg';
-                case '.jpeg':
-                    return '.jpeg';
-                case '.png':
-                    return '.png';
-                case '':
-                    return '.jpg';
-                default:
-                    return false;
-
+            if (filename) {
+                var extention = (path.extname(filename)).toLowerCase();
+                switch (extention) {
+                    case '.jpg':
+                        return '.jpg';
+                    case '.jpeg':
+                        return '.jpeg';
+                    case '.png':
+                        return '.png';
+                    case '':
+                        return '.jpg';
+                    default:
+                        return false;
+                }
+            } else {
+                return false;
             }
         }
     }
