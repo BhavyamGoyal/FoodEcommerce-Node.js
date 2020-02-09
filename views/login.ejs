@@ -1,0 +1,21 @@
+<%- include ('./_layouts/header.ejs') %>
+<h1><%= title %></h1>
+<form method="POST" action="/users/login">
+   
+    
+    <div class="form-group">
+        <label for="">User Name</label>
+        <input type="text" class="form-control" name="username" placeholder="User Name">
+    </div>
+
+    
+    <div class="form-group">
+        <label for="">Password</label>
+        <input type="password" class="form-control" name="password" placeholder="Password">
+    </div>
+
+    
+
+    <button class="btn btn-default">LogIn</button>
+    </form>
+<%- include ('./_layouts/footer.ejs') %>

@@ -18,41 +18,68 @@
 
 <body>
     <nav class="navbar navbar-expand-md navbar-dark bg-dark ">
-        <a class="navbar-brand" href="#">Navbar</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+        
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
+            aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
         <a class="navbar-brand" href="/">ShoppingCart</a>
 
         <div class="collapse navbar-collapse" id="navbarsExampleDefault">
             <ul class="navbar-nav mr-auto">
                 <% pages.forEach(function(page){ %>
-                    <% if(page.slug == "home") {%>
-                        <li>
-                            <a class="navbar-brand" href="/">
-                                <%= page.title %>
-                            </a>
-                        </li>
-                        <% }else{ %>
-                            <li>
-                                <a class="navbar-brand" href="<%= page.slug %>">
-                                    <%= page.title %>
-                                </a>
-                            </li>
-                            <% } %>
-                                <% }); %>
+                <% if(page.slug == "home") {%>
+                <li>
+                    <a class="navbar-brand" href="/">
+                        <%= page.title %>
+                    </a>
+                </li>
+                <% }else{ %>
+                <li>
+                    <a class="navbar-brand" href="<%= page.slug %>">
+                        <%= page.title %>
+                    </a>
+                </li>
+                <% } %>
+                <% }); %>
             </ul>
             <ul class="navbar-nav mr-auto">
                 <li>
                     <a class="navbar-brand" href="/cart/checkout">My Cart(
-            <% if(typeof cart !== "undefined"){ %>
+                        <% if(typeof cart !== "undefined"){ %>
 
-            <%= cart.length %>
-            <% }else{ %>
-            0
-            <% } %>
-            )</a>
+                        <%= cart.length %>
+                        <% }else{ %>
+                        0
+                        <% } %>
+                        )</a>
                 </li>
+                <% if(user){%>
+                    
+                    <li>
+                        <a class="navbar-brand" >Hi, <%=user.username %>  </a>
+                    </li>
+                    <li>
+                        <a class="navbar-brand" href="/users/logout"> (Logout)</a>
+                    </li>
+                <%}else{%>
+                    <li>
+                        <a class="navbar-brand" href="/users/register">Register</a>
+                    </li>
+                    <li>
+                        <a class="navbar-brand" href="/users/login">LogIn</a>
+                    </li>
+
+                <%}%>
+                <% if(user && user.admin == 1){%>
+                    
+                    <li>
+                        <a class="navbar-brand" href="/admin/pages"> Admin Area</a>
+                    </li>
+                <%}%>
+                
+
+                
             </ul>
         </div>
     </nav>
@@ -60,6 +87,15 @@
     <main role="main" class="container">
         <div class="starter-template">
             <%- messages('messages', locals) %>
+            <% if(errors) {%>
+            <% errors.forEach(function(error){%>
+            <div class="alert alert-danger">
+                <%= error.msg %>
+                <%= console.log(error.msg) %>
+            </div>
+
+            <% });%>
+            <%}%>
                 <div class="row">
                     <div class="col-xs-12 col-md-3">
                         <h3>Categories</h3>
@@ -67,13 +103,13 @@
                             <li class="list-group-item"><a href="/products">All Products</a></li>
                             <% categories.forEach(function(c){ %>
 
-                                <li class="list-group-item">
-                                    <a href="/products/<%= c.slug %>">
-                                        <%= c.slug %>
-                                    </a>
-                                </li>
-                                <% }); %>
-                        </ul>
-                    </div>
-                    <div class="col-xs-12 col-md-1"></div>
-                    <div class="col-xs-12 col-md-8">
+            <li class="list-group-item">
+                <a href="/products/<%= c.slug %>">
+                    <%= c.slug %>
+                </a>
+            </li>
+            <% }); %>
+            </ul>
+        </div>
+        <div class="col-xs-12 col-md-1"></div>
+        <div class="col-xs-12 col-md-8">
