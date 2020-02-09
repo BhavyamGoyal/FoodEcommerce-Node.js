@@ -5,7 +5,7 @@ var isAdmin = auth.isAdmin;
 //==============
 //Get Category Model
 //=============
-var Category = require('../models/Category');
+var Category = require('../models/category');
 
 //==============
 //Get Category Index
