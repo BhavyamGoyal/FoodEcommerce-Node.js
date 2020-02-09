@@ -15,6 +15,6 @@ var CategorySchema = mongoose.Schema({
 
 try {
     var Category = module.exports = mongoose.model('Category');
-} catch {
+} catch (e) {
     var Category = module.exports = mongoose.model('Category', CategorySchema);
 }
