@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+
+    <title>
+        <%- title -%>
+    </title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/freelancer.min.css">
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
+
+
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">ShoppingCartSite</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <% pages.forEach(function(page){ %>
+                    <% if(page.slug == "home") {%>
+                        <li>
+                            <a class="navbar-brand" href="/">
+                                <%= page.title %>
+                            </a>
+                        </li>
+                        <% }else{ %>
+                            <li>
+                                <a class="navbar-brand" href="/<%= page.slug %>">
+                                    <%= page.title %>
+                                </a>
+                            </li>
+            </ul>
+            <ul class="navbar-nav navbar-right">
+                <% } %>
+                    <% }); %>
+                        <li class="nav-item active">
+                            <a class="navbar-brand" href="/cart/checkout">My Cart(
+                        <% if(typeof cart !== "undefined"){ %>
+
+                        <%= cart.length %>
+                        <% }else{ %>
+                        0
+                        <% } %>
+                        )</a>
+                        </li>
+                        <% if(user){%>
+                            <li>
+                                <a class="navbar-brand" href="/">Hi, <%=user.username %> </a>
+                            </li>
+                            <li>
+                                <a class="navbar-brand" href="/users/logout"> (Logout)</a>
+                            </li>
+                            <%}else{%>
+                                <li>
+                                    <a class="navbar-brand" href="/users/register">Register</a>
+                                </li>
+                                <li>
+                                    <a class="navbar-brand" href="/users/login">LogIn</a>
+                                </li>
+
+                                <%}%>
+                                    <% if(user && user.admin == 1){%>
+
+                                        <li>
+                                            <a class="navbar-brand" href="/admin/pages"> Admin Area</a>
+                                        </li>
+                                        <%}%>
+            </ul>
+        </div>
+    </nav>
+
+    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+        <ol class="carousel-indicators">
+            <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+            <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+            <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+        </ol>
+        <div class="carousel-inner">
+            <div class="carousel-item active bg-blue carousel-height">
+                <h1>aaaa</h1>
+            </div>
+            <div class="carousel-item bg-green carousel-height">
+                <h1>aaaa</h1>
+            </div>
+            <div class="carousel-item bg-red carousel-height">
+                <h1>aaaa</h1>
+            </div>
+        </div>
+        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
+
+    <div>
+        <p class="para-text">
+            Where you try out a new dish, in the comfort of your own kitchen. Meet a slew of mysterious spices and ingredients. And discover a motherlode of flavours. And unlike most adventures, there’s no real suspense about how it turns out… Just perfect. So you
+            can enjoy the process, add your own unique touches, and come up with a brilliant new dish… in minutes. At Tasty Tales, we know that the best adventures begin in the kitchen. So, we tracked down aunts, mothers, mothers-in-law, and grandmothers
+            from all across India. Badgered them for every little detail of their favourite recipes. And packed the entire tale into a convenient, yummy pack that takes your home-cooking from regular to delicious.
+        </p>
+
+    </div>
+    <div class="container">
+        <h2>Large Modal</h2>
+        <!-- Trigger the modal with a button -->
+        <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Large Modal</button>
+
+        <!-- Modal -->
+        <div class="portfolio-modal modal fade show" id="myModal" role="dialog">
+            <div class="modal-dialog modal-xl">
+                <div class="modal-dialog modal-xl" role="document">
+                    <div class="modal-content">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <div class="modal-body text-center">
+                            <div class="container">
+                                <div class="row justify-content-center">
+                                    <div class="col-lg-8">
+                                        <!-- Portfolio Modal - Title -->
+                                        <h2 class="portfolio-modal-title text-secondary text-uppercase mb-0">Tasty Cake</h2>
+                                        <!-- Icon Divider -->
+                                        <div class="divider-custom">
+                                            <div class="divider-custom-line"></div>
+                                            <div class="divider-custom-icon">
+                                                <i class="fas fa-star"></i>
+                                            </div>
+                                            <div class="divider-custom-line"></div>
+                                        </div>
+                                        <!-- Portfolio Modal - Image -->
+                                        <img class="img-fluid rounded mb-5" src="img/portfolio/cake.png" alt="">
+                                        <!-- Portfolio Modal - Text -->
+                                        <p class="mb-5">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia neque assumenda ipsam nihil, molestias magnam, recusandae quos quis inventore quisquam velit asperiores, vitae? Reprehenderit soluta, eos quod consequuntur
+                                            itaque. Nam.</p>
+                                        <button class="btn btn-primary" href="#" data-dismiss="modal">
+                                        <i class="fas fa-times fa-fw"></i>
+                                        Close Window
+                                      </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <%- include ('./_layouts/footer.ejs') %>
