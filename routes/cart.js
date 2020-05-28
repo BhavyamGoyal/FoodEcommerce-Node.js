@@ -52,17 +52,17 @@ router.get('/add/:product', function(req, res) {
 //Get checkout Page
 //==================
 router.get('/checkout', function(req, res) {
-    if(req.session.cart && req.session.cart.lemgth==0){
+    if (req.session.cart && req.session.cart.length == 0) {
         delete req.session.cart;
         res.redirect('/cart/checkout');
-    }else{
+    } else {
         res.render('checkout', {
             title: 'Checkout',
             cart: req.session.cart
         });
 
     }
-    
+
 });
 
 //========================
@@ -73,30 +73,30 @@ router.get('/update/:product', function(req, res) {
     var cart = req.session.cart;
     var action = req.query.action;
 
-    for(var i=0;i<cart.length;i++){
-        if(cart[i].title == slug){
-            switch (action){
+    for (var i = 0; i < cart.length; i++) {
+        if (cart[i].title == slug) {
+            switch (action) {
                 case "add":
                     cart[i].qty++;
                     break;
                 case "remove":
                     cart[i].qty--;
-                    if(cart[i].qty <1)cart.splice(i,1);
+                    if (cart[i].qty < 1) cart.splice(i, 1);
                     break;
                 case "clear":
-                    cart.splice(i,1);
-                    if(cart.length == 0) delete req.session.cart;
-                    break; 
+                    cart.splice(i, 1);
+                    if (cart.length == 0) delete req.session.cart;
+                    break;
                 default:
                     console.log('update problem!');
-                    break;   
+                    break;
             }
             break;
         }
     }
     req.flash('success', 'Cart Updated!!');
     res.redirect('/cart/checkout');
-    
+
 });
 
 //========================
